@@ -2,13 +2,15 @@ const app = {
     data() {
         return {
             tasks: [{
+                    no: 0,
                     profile: 'images/profile.jpg',
                     userName: 'Jakkapong Praditthanachot',
                     description: 'preview',
                     img: 'images/preview.jpg',
                     heart: false,
-                }, {
-
+                },
+                {
+                    no: 1,
                     profile: 'https://images.unsplash.com/profile-1599498849251-35d2045d15d5image?dpr=1&auto=format&fit=crop&w=150&h=150&q=60&crop=faces&bg=fff',
                     userName: 'Daniele Colucci',
                     description: 'Wadi Rum Village, Giordania',
@@ -16,6 +18,7 @@ const app = {
                     heart: false,
                 },
                 {
+                    no: 2,
                     profile: 'https://images.unsplash.com/profile-1568157934859-378fb07773c8image?dpr=1&auto=format&fit=crop&w=150&h=150&q=60&crop=faces&bg=fff',
                     userName: 'Giancarlo Corti',
                     description: 'Building, Office Building, Architecture ',
@@ -23,6 +26,7 @@ const app = {
                     heart: false,
                 },
                 {
+                    no: 3,
                     profile: 'https://images.unsplash.com/profile-1536187323066-07c679d77285?dpr=1&auto=format&fit=crop&w=150&h=150&q=60&crop=faces&bg=fff',
                     userName: 'Cristina Anne Costello',
                     description: 'Building, Office Building, Architecture ',
@@ -30,6 +34,7 @@ const app = {
                     heart: false,
                 },
                 {
+                    no: 4,
                     profile: 'https://images.unsplash.com/profile-1610926087590-3403d9b90281image?dpr=1&auto=format&fit=crop&w=150&h=150&q=60&crop=faces&bg=fff',
                     userName: 'CURTIS HYSTAD',
                     description: 'BCA-1, Santa Cruz, United States',
@@ -37,26 +42,55 @@ const app = {
                     heart: false,
                 },
                 {
+                    no: 5,
                     profile: 'https://images.unsplash.com/profile-1587651800415-20eed2ec0209image?dpr=1&auto=format&fit=crop&w=150&h=150&q=60&crop=faces&bg=fff',
                     userName: 'Surface',
                     description: '',
                     img: 'https://images.unsplash.com/photo-1612832164065-fc35ded2a291?ixid=MXwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80',
                     heart: false,
-                }
+                },
+                {
+                    no: 6,
+                    profile: 'https://images.unsplash.com/profile-1604553045904-1d88269d4dafimage?dpr=1&auto=format&fit=crop&w=150&h=150&q=60&crop=faces&bg=fff',
+                    userName: 'Joshua Hoehne',
+                    description: 'Tulip Rain',
+                    img: 'https://images.unsplash.com/photo-1525127752301-99b0b6379811?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80',
+                    heart: false,
+                },
+                {
+                    no: 7,
+                    profile: 'https://images.unsplash.com/profile-1474495609232-c2cc56a491e9?dpr=1&auto=format&fit=crop&w=150&h=150&q=60&crop=faces&bg=fff',
+                    userName: 'Davide Cantelli',
+                    description: 'Iceland',
+                    img: 'https://images.unsplash.com/photo-1475319122043-5ca9eeceefaf?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80',
+                    heart: false,
+                },
             ],
-            form: {
-                text: "",
-                search: false,
-            },
+            text: "",
+            search: false,
+            hasView: false,
+            viewImg: '',
+            test: false
         }
     },
     methods: {
-        liked(index) {
-            this.tasks[index].heart = !this.tasks[index].heart;
+        liked(task) {
+            this.tasks[task.no].heart = !this.tasks[task.no].heart;
+            console.log(task.no)
         },
-        search() {
-            this.form.search = !this.form.search;
+        toggleView(task) {
+            this.viewImg = this.tasks[task.no].img;
+            this.hasView = true;
         },
+        searching() {
+            this.search = !this.search;
+        },
+        close() {
+            this.hasView = false;
+        },
+        cancel() {
+            this.text = '';
+        }
     },
     computed: {
         countLike() {
@@ -64,11 +98,10 @@ const app = {
         },
         searchlist() {
             return this.tasks.filter((member) => {
-                return member.description.toLowerCase().includes(this.form.text.toLowerCase()) +
-                    member.userName.toLowerCase().includes(this.form.text.toLowerCase())
+                return member.description.toLowerCase().includes(this.text.toLowerCase()) +
+                    member.userName.toLowerCase().includes(this.text.toLowerCase())
             });
-        }
+        },
     }
-
 }
 Vue.createApp(app).mount('#app')

@@ -25,59 +25,71 @@
 
 <body id="app" class="bg-gray-100">
 
-    <header class="w-full bg-white p-6 shadow-lg">
+    <header class="bg-white p-6 shadow-lg fixed w-full">
         <div class="flex relative max-w-6xl mx-auto">
             <div class="font-mono text-2xl bg-red-500 p-4 rounded-full text-white">
                 <i class="fas fa-heart pr-2"></i> Like ({{ countLike }})
             </div>
             <div class="self-center ml-auto">
-                <span :class="{'hidden' : form.search }" class=""><i class="fas fa-2x fa-search"
-                        @click="search"></i></span>
-                <span :class="{'hidden' : !form.search}" class="">
-                    <input class="px-2 border-2 border-black mx-2 " placeholder="Please enter text for searching photos"
-                        v-model="form.text">
-                    <button class="mx-2 rouned rounded-full text-white px-4 py-2 bg-blue-500"
-                        @click="search">Cancle</button>
+                <span :class="{'hidden' : search}">
+                    <i class="fas fa-2x fa-search cursor-pointer" @click="searching"></i></span>
+                <span :class="{'hidden' : !search}">
+                    <input class="p-1 pl-6 border-2 rouned rounded-2xl border-gray-700 mx-2 w-80 focus:outline-none"
+                        placeholder="Please enter text for searching" v-model="text ">
+                    <button
+                        class="mx-2 rouned rounded-3xl text-white px-4 py-2 bg-blue-500 hover:bg-blue-700 focus:outline-none"
+                        @click="searching()+cancel() ">Cancel</button>
                 </span>
             </div>
         </div>
     </header>
 
+    <div class="flex justify-center pt-28 "></div>
 
-    <div class="p-4 " v-for="(task,index) in searchlist" v-if="searchlist.length !== 0 ">
-        <div class="bg-white border rounded-sm max-w-md">
-            <div class="flex items-center px-4 py-3 ">
-                <img class="h-8 w-8 rounded-full" v-bind:src="task.profile" />
-                <div class="ml-3 ">
-                    <span class="text-sm font-semibold antialiased block leading-tight">{{task.userName}}</span>
-                    <span class="text-gray-600 text-xs block">{{task.description}}</span>
+    <!-- show image -->
+    <div v-show="hasView " class="fixed flex justify-center h-screen w-screen top-0 bg-black ">
+        <div class="h-screen m-6 ">
+            <i class="far fa-2x fa-times-circle text-white flex-row-reverse cursor-pointer " @click="close "></i>
+            <img :src="viewImg " class="h-5/6 m-6 border border-4 border-white ">
+        </div>
+    </div>
+
+    <!-- list task -->
+    <div class=" flex flex-wrap justify-center " v-if="searchlist.length !==0 ">
+        <div class="flex p-4 " v-for="task in searchlist ">
+            <div class="bg-white border rounded-sm max-w-md ">
+                <div class="flex items-center px-4 py-3 ">
+                    <img class="h-8 w-8 rounded-full " v-bind:src="task.profile " />
+                    <div class="ml-3 ">
+                        <span class="text-sm font-semibold antialiased block leading-tight ">{{task.userName}}</span>
+                        <span class="text-gray-600 text-xs block ">{{task.description}}</span>
+                    </div>
                 </div>
-            </div>
-            <img v-bind:src="task.img" @dblclick="liked(index)" />
-            <div class="flex items-center justify-between mx-4 mt-3 mb-2 ">
-                <div class="flex gap-5">
-                    <i v-show="!task.heart" class="far fa-2x fa-heart text-black hover:text-red-600 transition duration-500" @click="liked(index)"></i>
-                    <i v-show="task.heart" class="fas fa-2x fa-heart text-red-500 transition duration-500" @click="liked(index)"></i>
-                    <div class="font-semibold text-sm mt-2 mb-4">likes</div>
+                <img v-bind:src="task.img " @click="toggleView(task) " class="md:h-72 " />
+                <div class="flex items-center justify-between mx-4 mt-3 mb-2 ">
+                    <div class="flex gap-5 ">
+                        <i v-show="!task.heart " class="far fa-2x fa-heart text-black hover:text-red-600 transition duration-500 " @click="liked(task) "></i>
+                        <i v-show="task.heart " class="fas fa-2x fa-heart text-red-500 transition duration-500 " @click="liked(task) "></i>
+                        <div class="font-semibold text-sm mt-2 mb-4 ">likes</div>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div v-else class="mt-10 bg-white shadow-lg rounded w-full mx-auto px-auto py-5 flex justify-center">
-        <h2 class="mb-2 text-2xl font-bold text-gray-800">No Photos.</h2>
+
     </div>
 
-    <div class="flex flex-wrap ">
-        <div>test1</div>
-        <div>test1</div>
-        <div>test1</div>
-        <div>test1</div>
+    <!-- button  -->
+    <div v-else class="mt-10 bg-white shadow-lg rounded w-full mx-auto px-auto py-5 flex justify-center ">
+        <h2 class="mb-2 text-2xl font-bold text-gray-800 ">No Photos</h2>
     </div>
 
-    <a href="https://unsplash.com/" class="flex justify-center p-4 text-gray-600 text-xs">photo by Unsplash</a>
+
+
+
+    <a href="https://unsplash.com/ " class="flex justify-center p-4 text-gray-600 text-xs ">photo by Unsplash</a>
 
     <!-- my main.js -->
-    <script src="main.js"></script>
+    <script src="main.js "></script>
 </body>
 
 </html>
