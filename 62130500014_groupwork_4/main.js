@@ -76,7 +76,8 @@ const app = {
     methods: {
         liked(task) {
             this.tasks[task.no].heart = !this.tasks[task.no].heart;
-            console.log(task.no)
+            console.log('Like no :' + task.no)
+            console.log('Like :' + task.img)
         },
         toggleView(task) {
             this.viewImg = this.tasks[task.no].img;
