@@ -103,6 +103,9 @@ const app = {
                     member.userName.toLowerCase().includes(this.text.toLowerCase())
             });
         },
+        countSearch() {
+            return this.searchlist.length;
+        }
     }
 }
 Vue.createApp(app).mount('#app')
