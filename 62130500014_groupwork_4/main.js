@@ -70,7 +70,7 @@ const app = {
             search: false,
             hasView: false,
             viewImg: '',
-            test: false
+            bigIMG: []
         }
     },
     methods: {
@@ -91,6 +91,31 @@ const app = {
         },
         cancel() {
             this.text = '';
+        },
+        forward() {
+            this.bigIMG = this.searchlist;
+            for (let i = 0; i < this.bigIMG.length; i++) {
+                if (this.viewImg == this.bigIMG[i].img) {
+                    if (i == this.searchlist.length - 1) {
+                        i = 0 - 1;
+                    }
+                    this.viewImg = this.bigIMG[i + 1].img;
+                    break;
+                }
+            }
+        },
+        backward() {
+            this.bigIMG = this.searchlist;
+            for (let i = this.bigIMG.length - 1; i >= 0; i--) {
+                console.log(this.bigIMG[i].img)
+                if (this.viewImg == this.bigIMG[i].img) {
+                    if (i == 0) {
+                        i = this.bigIMG.length;
+                    }
+                    this.viewImg = this.bigIMG[i - 1].img;
+                    break;
+                }
+            }
         }
     },
     computed: {
